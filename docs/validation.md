@@ -4,18 +4,18 @@ Validation date: **2026-10-29**. These results establish behavior on the listed 
 
 ## Executed checks
 
-| Layer                                | Result                                         | Evidence and scope                                                                                                                                                        |
-| ------------------------------------ | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| TypeScript                           | Passed                                         | Shared renderer, decoders, comparison core, native adapters and tests                                                                                                     |
-| Automated tests                      | **105 passed; no failures or skips**           | `npm test`; original 63 cases, 20 comparison cases, 13 large-loader cases and 9 native-range cases                                                                        |
-| Shared viewer                        | **15 browser groups passed**                   | Real Chromium WebGL, Worker and WASM; mouse input, file replacement, strict CSP and all ordinary supported formats                                                        |
-| Comparison interface                 | **9 browser groups passed**                    | Multiple models, STL reference, units, overlay/split view, manual transforms, ICP, heatmap, batch reports and refresh preservation                                        |
-| Actual files above 5 GiB             | Passed                                         | Real sparse binary PLY and STL through both Chromium File/Blob slices and HTTP 206 ranges; sentinels at the beginning, middle and end                                     |
-| OpenAI stdio process                 | **6 operations passed**                        | Actual bundled server and unmodified MCP SDK transport; initialization, discovery, HTML read, viewer invocation and unknown-resource rejection                            |
-| OpenAI legacy resource interface     | **7 browser groups passed**                    | Real bundled app/Worker/WebGL in a simulated Desktop host; ordinary PLY, STEP, updates, subscriptions and unsupported-host behavior                                       |
-| OpenAI selected-file range interface | **6 browser groups passed**                    | Actual app plus real MCP SDK client/server; sparse PLY and STL above 5 GiB, revision changes, cancellation boundaries and bounded reads; Desktop carrier simulated        |
-| DeepSeek Harness native Web host     | **8 browser groups passed**                    | Actual installed adapter in `@deepseek-ai/dsh@0.2.2-alpha.2`; single-click routing, interaction, refresh, STEP, >5 GiB PLY/STL and real byte-range transport              |
-| VS Code native Electron              | Local execution blocked by unavailable display | Four-stage native acceptance is included in GitHub CI; see the current [Actions results](https://github.com/Afloat16/modeldock/actions) and the native-test section below |
+| Layer                                | Result                                   | Evidence and scope                                                                                                                                                 |
+| ------------------------------------ | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| TypeScript                           | Passed                                   | Shared renderer, decoders, comparison core, native adapters and tests                                                                                              |
+| Automated tests                      | **105 passed; no failures or skips**     | `npm test`; original 63 cases, 20 comparison cases, 13 large-loader cases and 9 native-range cases                                                                 |
+| Shared viewer                        | **15 browser groups passed**             | Real Chromium WebGL, Worker and WASM; mouse input, file replacement, strict CSP and all ordinary supported formats                                                 |
+| Comparison interface                 | **9 browser groups passed**              | Multiple models, STL reference, units, overlay/split view, manual transforms, ICP, heatmap, batch reports and refresh preservation                                 |
+| Actual files above 5 GiB             | Passed                                   | Real sparse binary PLY and STL through both Chromium File/Blob slices and HTTP 206 ranges; sentinels at the beginning, middle and end                              |
+| OpenAI stdio process                 | **6 operations passed**                  | Actual bundled server and unmodified MCP SDK transport; initialization, discovery, HTML read, viewer invocation and unknown-resource rejection                     |
+| OpenAI legacy resource interface     | **7 browser groups passed**              | Real bundled app/Worker/WebGL in a simulated Desktop host; ordinary PLY, STEP, updates, subscriptions and unsupported-host behavior                                |
+| OpenAI selected-file range interface | **6 browser groups passed**              | Actual app plus real MCP SDK client/server; sparse PLY and STL above 5 GiB, revision changes, cancellation boundaries and bounded reads; Desktop carrier simulated |
+| DeepSeek Harness native Web host     | **8 browser groups passed**              | Actual installed adapter in `@deepseek-ai/dsh@0.2.2-alpha.2`; single-click routing, interaction, refresh, STEP, >5 GiB PLY/STL and real byte-range transport       |
+| VS Code native Electron              | **Passed in GitHub CI (VS Code 1.96.4)** | Actual Electron/Xvfb run: ordinary PLY, STEP and both >5 GiB sources; see [native CI evidence](https://github.com/Afloat16/modeldock/actions/runs/40855672603)     |
 
 Test runners write compact reports to `test-results`, which is excluded from Git and release source archives. CI uploads its reports separately. A recorded native or simulated result is identified explicitly; a mock transport does not establish an installed proprietary Desktop result.
 
@@ -71,7 +71,7 @@ The shared viewer checks colored clouds, both binary PLY endiannesses, both STL 
 
 CAD is rendered by the actual OpenCascade WASM. The published upstream JavaScript glue originally required dynamic function generation, incompatible with a strict webview policy. ModelDock applies a deterministic, upstream-hash-guarded static-closure patch. Tests prove the unpatched glue fails with string-code generation disabled, then compare every output coordinate, normal, index, color, name and warning from patched versus original runtimes. A real strict-CSP Worker imports STEP, IGES and BREP; JavaScript `unsafe-eval` is not enabled. The WASM is unchanged. Matching source provenance, patch and rebuild instructions are in [cad-source.md](cad-source.md).
 
-The bundled MCP server passed real stdio initialization, tool/resource discovery, complete HTML resource reading, viewer invocation and unknown-URI rejection. The measured resource JSON response was **6,119,853 bytes**, below the unchanged SDK default **10,485,760-byte** ceiling. A gzip/DecompressionStream bootstrap and a build-size guard keep the embedded CAD runtime within that transport budget. The browser test checks nonce propagation and an actionable message if decompression support is unavailable.
+The bundled MCP server passed real stdio initialization, tool/resource discovery, complete HTML resource reading, viewer invocation and unknown-URI rejection. The measured resource JSON response was **6,033,201 bytes**, below the unchanged SDK default **10,485,760-byte** ceiling. A gzip/DecompressionStream bootstrap and a build-size guard keep the embedded CAD runtime within that transport budget. The browser test checks nonce propagation and an actionable message if decompression support is unavailable.
 
 ## Native-host boundaries
 
@@ -85,7 +85,7 @@ Local Electron execution stopped at the missing-display guard. A previous system
 xvfb-run -a npm run test:extension
 ```
 
-The GitHub workflow runs this gate and saves `test-results/vscode-native.json`. Consult the exact workflow run for subsequent CI evidence; the rest of this record separates executed local results from tests merely present in the repository.
+The GitHub workflow runs this gate and saves `test-results/vscode-native.json`. The first real GitHub native run passed all four stages at commit `7a8e880` ([workflow run](https://github.com/Afloat16/modeldock/actions/runs/40855672603)); the Linux display limitation described above applies only to the local development container. The native job is separate from the browser job, so a browser assertion failure cannot silently skip native acceptance. Subsequent dependency-patched runs are linked from the repository Actions page.
 
 ### OpenAI/Codex Desktop
 
@@ -93,6 +93,10 @@ No proprietary Desktop installation was available for install-and-click acceptan
 
 ## Reproduction environment and exclusions
 
-Local validation used Linux x86-64, Node.js 24.22.1, TypeScript 7.0.2, Three.js 0.186.1, Playwright 1.51.1 / Chromium 134 with software WebGL, occt-import-js 0.0.23 / OCCT 7.6.1, and DeepSeek Harness 0.2.2-alpha.2 Web. [releasing.md](releasing.md) lists the full test and release commands.
+Local validation used Linux x86-64, Node.js 24.22.1, TypeScript 7.0.2, Three.js 0.186.1, initially Playwright 1.51.1 / Chromium 134 with software WebGL; the release updates the test driver to Playwright 1.64.1 and CI downloads its matching browser, occt-import-js 0.0.23 / OCCT 7.6.1, and DeepSeek Harness 0.2.2-alpha.2 Web. [releasing.md](releasing.md) lists the full test and release commands.
 
 No Windows/macOS native-host matrix, dense multi-gigabyte throughput benchmark, complete out-of-core spatial LOD engine, Remote SSH/WSL acceptance run, proprietary CAD-format support, full Gaussian-splat rendering, exact full-file deviation calculation, or independent security audit is claimed. The CAD source build recipe is included; a full Emscripten recompilation was not performed here.
+
+## Dependency release checks
+
+The pre-release dependency scan initially reported six high-severity findings (including transitive effects). Playwright was updated to 1.64.1 and narrow Zod/MSAL overrides were applied. The subsequent npm audit reported **zero known vulnerabilities**, TypeScript passed and all **105 tests** passed again. This is the registry audit result on the validation date, not proof against undiscovered vulnerabilities. The scoped overrides and the untested remote Marketplace authentication boundary are documented in [releasing.md](releasing.md#scoped-dependency-overrides).

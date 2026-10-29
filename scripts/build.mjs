@@ -1,5 +1,15 @@
 import { build } from 'esbuild';
-import { mkdir, readFile, writeFile, copyFile, readdir, cp, access, chmod } from 'node:fs/promises';
+import {
+  mkdir,
+  readFile,
+  writeFile,
+  copyFile,
+  readdir,
+  cp,
+  access,
+  chmod,
+  rm,
+} from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { gzipSync } from 'node:zlib';
@@ -130,7 +140,9 @@ if (hasOpenAI) {
   // SDK's default 10 MiB stdio message limit. Compress the IIFE, then use the
   // browser's streaming decompressor and an already-declared local Blob script.
   // This preserves the self-contained resource without JavaScript eval or a CDN.
-  const compressedApp = gzipSync(Buffer.from(app.outputFiles[0].text), { level: 9 }).toString('base64');
+  const compressedApp = gzipSync(Buffer.from(app.outputFiles[0].text), { level: 9 }).toString(
+    'base64',
+  );
   const bootstrap = `(async()=>{
     const nonce=document.currentScript?.nonce;
     let scriptUrl;
@@ -157,7 +169,9 @@ if (hasOpenAI) {
   const css = await readFile('src/viewer/styles.css', 'utf8');
   const html = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ModelDock</title><style>html,body,#app{height:100%;min-height:480px;margin:0;overflow:hidden}${css}</style></head><body><div id="app"></div><script>${bootstrap}</script></body></html>`;
   if (Buffer.byteLength(JSON.stringify(html)) > 9 * 1024 * 1024) {
-    throw new Error('The OpenAI UI exceeds its 9 MiB transport budget; reduce the bundled payload before packaging.');
+    throw new Error(
+      'The OpenAI UI exceeds its 9 MiB transport budget; reduce the bundled payload before packaging.',
+    );
   }
   await writeFile('dist/openai/viewer.html', html);
   await build({
@@ -175,6 +189,8 @@ if (hasOpenAI) {
 }
 
 // Preserve complete license texts for all production dependencies in distributable packages.
+// Rebuild the generated inventory after dependency upgrades; do not retain old versions.
+await rm('dist/licenses', { recursive: true, force: true });
 await mkdir('dist/licenses', { recursive: true });
 await cp('third_party/licenses', 'dist/licenses', { recursive: true });
 const lock = JSON.parse(await readFile('package-lock.json', 'utf8'));
@@ -201,6 +217,7 @@ for (const target of ['adapters/deepseek-harness', ...(hasOpenAI ? ['adapters/op
   await copyFile('LICENSE', `${target}/LICENSE`);
   await copyFile('THIRD_PARTY_NOTICES.md', `${target}/THIRD_PARTY_NOTICES.md`);
   await copyFile('docs/cad-source.md', `${target}/CAD_SOURCE.md`);
+  await rm(`${target}/licenses`, { recursive: true, force: true });
   await cp('dist/licenses', `${target}/licenses`, { recursive: true });
 }
 console.log(

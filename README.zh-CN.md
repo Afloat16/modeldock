@@ -115,6 +115,7 @@ npx playwright install chromium
 npm run test:browser
 npm run test:openai-browser
 npm run test:comparison
+npm run test:large
 npm run test:openai-range
 npm run test:extension
 npm run package:vsix

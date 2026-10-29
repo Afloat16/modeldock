@@ -10,6 +10,9 @@
 - Added known-answer geometry, large-source, host-range and real-browser comparison coverage. Actual host validation and remaining acceptance steps are recorded in `docs/validation.md`; simulated OpenAI delivery is not a claim of real Desktop installation.
 - Added verified fetching of pinned corresponding CAD source archives instead of vendoring the approximately 52 MB archives into Git. Complete release ZIPs include the verified matching sources.
 
+- Verified native VS Code in GitHub CI and the actual installed Harness Web adapter with sparse PLY/STL sources above 5 GiB. Browser, comparison and range tests are release gates.
+- Updated test tooling and scoped vulnerable Zod/MSAL transitive dependencies; dependency audit reports zero known vulnerabilities at release validation. Generated license inventories are rebuilt after dependency changes.
+
 ## 0.1.0 — 2026-10-29
 
 Initial open-source release candidate. Added the shared point-cloud/mesh/CAD viewer; VS Code custom editor; DeepSeek Harness document preview; OpenAI desktop file entrypoint; tokenized local viewer; automatic reload; navigation, display controls, clipping and approximate measurement; original fixtures, tests, CI and release packaging.

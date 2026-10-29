@@ -116,7 +116,6 @@ The MIT license of the surrounding application does not relicense the CAD kernel
 | vary | 1.1.2 | MIT |
 | which | 2.0.2 | ISC |
 | wrappy | 1.0.2 | ISC |
-| zod | 4.4.3 | MIT |
 | zod | 4.6.7 | MIT |
 | zod-to-json-schema | 3.25.2 | ISC |
 
