@@ -1,0 +1,12 @@
+{
+  "name": "modeldock-local",
+  "interface": { "displayName": "ModelDock Local" },
+  "plugins": [
+    {
+      "name": "modeldock",
+      "source": { "source": "local", "path": "./adapters/openai" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "category": "Productivity"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+name: Package release
+on:
+  release:
+    types: [published]
+permissions:
+  contents: write
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - name: Verify release version
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: node -e 'const p=require("./package.json"); if (process.env.RELEASE_TAG !== `v${p.version}`) throw new Error("Release tag must match package version");'
+      - run: npm run typecheck && npm test
+      - run: npm run build && npm run test:openai-stdio && npm run package:vsix && npm run package:release
+      - name: Attach distributables
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: gh release upload "$RELEASE_TAG" releases/* --clobber

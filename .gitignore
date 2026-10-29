@@ -1,0 +1,12 @@
+node_modules/
+dist/
+releases/
+test-results/
+.vscode-test/
+*.log
+.DS_Store
+adapters/deepseek-harness/lib/
+adapters/*/licenses/
+third_party/cad-source/*.tar.gz
+third_party/cad-source/*.part
+.modeldock-*-test-*/

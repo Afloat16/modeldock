@@ -1,0 +1,12 @@
+node_modules
+dist
+releases
+test-results
+.vscode-test
+third_party
+fixtures
+adapters/*/lib
+adapters/*/dist
+adapters/*/licenses
+package-lock.json
+scripts/patch-occt.mjs

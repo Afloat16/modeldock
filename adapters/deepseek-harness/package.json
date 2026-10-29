@@ -1,0 +1,57 @@
+{
+  "name": "dsh-plugin-modeldock",
+  "version": "0.2.0",
+  "description": "Open reconstruction meshes, point clouds, and CAD files directly in DeepSeek Harness.",
+  "type": "module",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "licenses",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md",
+    "CAD_SOURCE.md"
+  ],
+  "keywords": [
+    "dsh-plugin",
+    "ply",
+    "cad",
+    "3d",
+    "step",
+    "point-cloud",
+    "modeldock"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=24.9.0",
+    "dsh": ">=0.2.2-alpha.2 <0.3.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-sidebar-documentpreview",
+        "@deepseek-ai/dsh-api-gateway",
+        "@deepseek-ai/dsh-api-workspace-files"
+      ]
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Afloat16/modeldock.git",
+    "directory": "adapters/deepseek-harness"
+  },
+  "homepage": "https://github.com/Afloat16/modeldock#readme",
+  "bugs": {
+    "url": "https://github.com/Afloat16/modeldock/issues"
+  }
+}

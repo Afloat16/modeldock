@@ -1,0 +1,21 @@
+{
+  "name": "modeldock",
+  "version": "0.2.0",
+  "description": "Read-only 3D model and CAD file previews for supported Desktop hosts.",
+  "author": {
+    "name": "ModelDock contributors"
+  },
+  "license": "MIT",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "ModelDock · 3D & CAD",
+    "shortDescription": "Click a model file to inspect it in 3D.",
+    "longDescription": "Local PLY, mesh, and CAD previews with rotation, pan, zoom, and file updates. Requires a Desktop host with OpenAI file entrypoints and resource access.",
+    "developerName": "ModelDock contributors",
+    "category": "Productivity",
+    "capabilities": [
+      "Read"
+    ],
+    "brandColor": "#45D6BC"
+  }
+}

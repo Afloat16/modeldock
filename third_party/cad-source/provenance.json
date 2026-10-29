@@ -1,0 +1,107 @@
+{
+  "verifiedOn": "2026-10-29",
+  "package": {
+    "name": "occt-import-js",
+    "version": "0.0.23",
+    "npmGitHead": "c2148e54b456b571238d35cac037d304053d64b2",
+    "npmIntegrity": "sha512-RFfYQXYFX5C1mB1Aywm0ShcUKzXOr/VzTnlzhBSDJOR6YCAPt1HYCzeXWg1vwwjn/cUxwqRNhhtf1dlewoZYCQ==",
+    "npmTarball": "https://registry.npmjs.org/occt-import-js/-/occt-import-js-0.0.23.tgz"
+  },
+  "wrapper": {
+    "repository": "https://github.com/kovacsv/occt-import-js",
+    "commit": "c2148e54b456b571238d35cac037d304053d64b2",
+    "commitDate": "2024-12-02T18:32:19Z"
+  },
+  "occt": {
+    "version": "7.6.1",
+    "gitlinkCommit": "d2abb6d844231cb8f29be6894440874a4700e4a5",
+    "originalSubmoduleRepository": "https://git.dev.opencascade.org/repos/occt.git",
+    "archiveRepository": "https://github.com/Open-Cascade-SAS/OCCT"
+  },
+  "upstreamEmscriptenVersion": "3.1.69",
+  "archives": [
+    {
+      "file": "occt-import-js-c2148e54b456b571238d35cac037d304053d64b2.tar.gz",
+      "url": "https://codeload.github.com/kovacsv/occt-import-js/tar.gz/c2148e54b456b571238d35cac037d304053d64b2",
+      "bytes": 4399573,
+      "sha256": "2bd3799b2ac56cbf3f0df6300a51c8890e137bd001462702b356f621e33ff192"
+    },
+    {
+      "file": "occt-d2abb6d844231cb8f29be6894440874a4700e4a5.tar.gz",
+      "url": "https://codeload.github.com/Open-Cascade-SAS/OCCT/tar.gz/d2abb6d844231cb8f29be6894440874a4700e4a5",
+      "bytes": 48218968,
+      "sha256": "2715d89a1bc44dfd34dab88f729c445ea93f6b57d6539b0c89614a80ae144a6c"
+    }
+  ],
+  "modifications": "WASM and bundled source archives are unmodified. Build applies the shipped modeldock-csp-1 static-closure patch to the npm JavaScript loader, preserving source and modification notices. Original node_modules inputs are not written.",
+  "verification": "Installed WASM matches wrapper release archive byte-for-byte; upstream JavaScript/build scripts match after CRLF/LF normalisation. Patched runtime passes strict-CSP real browser Worker STEP/IGES/BREP/bracket/reused-worker checks without unsafe-eval. No-string-code VM regression compares all geometry against original. Full WASM recompilation was not executed.",
+  "upstreamInputs": [
+    {
+      "file": "occt-import-js.js",
+      "bytes": 96871,
+      "sha256": "3fb44ce11d00611f9b3f3c5775d520ebab48930c1f08279b7b1316f05f0d3379",
+      "releaseCommitAssetBytes": 96852,
+      "releaseCommitAssetSHA256": "8b090be386bc8ffba32222aa19f38742ae8ed35707819beb7f8ab4938a28c97a",
+      "exactMatch": false,
+      "onlyDifference": "npm text uses CRLF; Git archive text uses LF"
+    },
+    {
+      "file": "occt-import-js.wasm",
+      "bytes": 7604031,
+      "sha256": "33391fc9d94ea5c869a6718488bf0a9a464222bac9bdc764dfe1690cef281952",
+      "releaseCommitAssetBytes": 7604031,
+      "releaseCommitAssetSHA256": "33391fc9d94ea5c869a6718488bf0a9a464222bac9bdc764dfe1690cef281952",
+      "exactMatch": true,
+      "onlyDifference": "none"
+    }
+  ],
+  "distributedAssets": [
+    {
+      "file": "occt-import-js.js",
+      "bytes": 95501,
+      "sha256": "3682a7c411a72fd6b9a13326595d4813f2c478cd387a7b24730617138a887600",
+      "modification": "modeldock-csp-1"
+    },
+    {
+      "file": "occt-import-js.wasm",
+      "bytes": 7604031,
+      "sha256": "33391fc9d94ea5c869a6718488bf0a9a464222bac9bdc764dfe1690cef281952",
+      "modification": "none"
+    }
+  ],
+  "patch": {
+    "id": "modeldock-csp-1",
+    "date": "2026-10-29",
+    "source": "scripts/patch-occt.mjs",
+    "sourceSHA256": "14f5bc63c411a095c6bb4b60a23e08855f5f4bd4fd00cdbd01e1345920fdfd6a",
+    "originalJavaScriptSHA256": "3fb44ce11d00611f9b3f3c5775d520ebab48930c1f08279b7b1316f05f0d3379",
+    "outputJavaScriptSHA256": "3682a7c411a72fd6b9a13326595d4813f2c478cd387a7b24730617138a887600",
+    "changes": [
+      "Replace craftInvokerFunction with static typed-marshalling closures; remove newFunc/createJsInvoker generators",
+      "Replace __emval_get_method_caller with static JS calls/Reflect.construct",
+      "Replace emval_get_global dynamic Function fallback with direct global lookups"
+    ],
+    "basedOn": "Emscripten 3.1.69 DYNAMIC_EXECUTION=0 runtime branches",
+    "licenseNotice": "Modified occt-import-js loader retains LGPL-2.1; Emscripten reference source license retained as MIT/NCSA."
+  },
+  "emscriptenReferenceFiles": [
+    {
+      "file": "third_party/cad-source/emscripten-3.1.69/embind.js",
+      "url": "https://raw.githubusercontent.com/emscripten-core/emscripten/3.1.69/src/embind/embind.js",
+      "bytes": 88222,
+      "sha256": "c8a4d7c20b93997153ce9e0b11df6f5e6b2294e135a891ec824de4bcc09e2915"
+    },
+    {
+      "file": "third_party/cad-source/emscripten-3.1.69/emval.js",
+      "url": "https://raw.githubusercontent.com/emscripten-core/emscripten/3.1.69/src/embind/emval.js",
+      "bytes": 16631,
+      "sha256": "1f4fa130697098e6d5e2a2bfbd860d0cff51bd8fca65c2e14bf050a011efbc97"
+    },
+    {
+      "file": "third_party/licenses/emscripten-3.1.69-LICENSE",
+      "url": "https://raw.githubusercontent.com/emscripten-core/emscripten/3.1.69/LICENSE",
+      "bytes": 5093,
+      "sha256": "620a78084fc7ca97c0b5dea9abf891f3ffcadfdbf305276f099c9c4e12fc1d86"
+    }
+  ]
+}

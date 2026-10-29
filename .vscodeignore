@@ -1,0 +1,13 @@
+**/*
+!package.json
+!README.md
+!README.zh-CN.md
+!LICENSE
+!CHANGELOG.md
+!THIRD_PARTY_NOTICES.md
+!dist/extension.cjs
+!dist/extension.cjs.map
+!dist/web/**
+!dist/licenses/**
+!media/**
+!docs/**

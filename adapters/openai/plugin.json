@@ -1,0 +1,25 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "modeldock",
+  "version": "0.2.0",
+  "description": "Open reconstruction models and CAD files in a native Desktop file viewer.",
+  "author": {
+    "name": "ModelDock contributors"
+  },
+  "license": "MIT",
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "ModelDock · 3D & CAD",
+        "shortDescription": "Click a model file to inspect it in 3D.",
+        "longDescription": "Read-only local previews for PLY point clouds, polygon meshes, and STEP/IGES/BREP CAD files. Rotate, pan, zoom, and follow file updates in a supported Desktop file viewer.",
+        "developerName": "ModelDock contributors",
+        "category": "Productivity",
+        "capabilities": [
+          "Read"
+        ],
+        "brandColor": "#45D6BC"
+      }
+    }
+  }
+}

@@ -1,0 +1,216 @@
+{
+  "name": "modeldock",
+  "displayName": "ModelDock — 3D & CAD Preview",
+  "description": "Local 3D/CAD preview, bounded 5+ GiB point-cloud and STL viewing, alignment and reference-model evaluation.",
+  "version": "0.2.0",
+  "publisher": "modeldock-dev",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "vscode": "^1.90.0",
+    "node": ">=22"
+  },
+  "categories": [
+    "Visualization",
+    "Other"
+  ],
+  "keywords": [
+    "ply",
+    "point cloud",
+    "3d",
+    "cad",
+    "step",
+    "codex",
+    "deepseek",
+    "reconstruction"
+  ],
+  "main": "./dist/extension.cjs",
+  "bin": {
+    "modeldock": "./dist/cli.cjs",
+    "modeldock-mcp": "./dist/mcp.cjs"
+  },
+  "extensionKind": [
+    "workspace"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    },
+    "virtualWorkspaces": {
+      "supported": true
+    }
+  },
+  "activationEvents": [
+    "onCustomEditor:modeldock.preview"
+  ],
+  "contributes": {
+    "customEditors": [
+      {
+        "viewType": "modeldock.preview",
+        "displayName": "ModelDock 3D Preview",
+        "priority": "default",
+        "selector": [
+          {
+            "filenamePattern": "*.[pP][lL][yY]"
+          },
+          {
+            "filenamePattern": "*.[sS][tT][lL]"
+          },
+          {
+            "filenamePattern": "*.[oO][bB][jJ]"
+          },
+          {
+            "filenamePattern": "*.[oO][fF][fF]"
+          },
+          {
+            "filenamePattern": "*.[xX][yY][zZ]"
+          },
+          {
+            "filenamePattern": "*.[pP][cC][dD]"
+          },
+          {
+            "filenamePattern": "*.[gG][lL][bB]"
+          },
+          {
+            "filenamePattern": "*.[gG][lL][tT][fF]"
+          },
+          {
+            "filenamePattern": "*.[sS][tT][eE][pP]"
+          },
+          {
+            "filenamePattern": "*.[sS][tT][pP]"
+          },
+          {
+            "filenamePattern": "*.[iI][gG][eE][sS]"
+          },
+          {
+            "filenamePattern": "*.[iI][gG][sS]"
+          },
+          {
+            "filenamePattern": "*.[bB][rR][eE][pP]"
+          },
+          {
+            "filenamePattern": "*.[bB][rR][pP]"
+          }
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "command": "modeldock.open",
+        "title": "ModelDock: Open 3D Preview"
+      },
+      {
+        "command": "modeldock.reopenAsText",
+        "title": "ModelDock: Reopen as Text"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "modeldock.open",
+          "group": "navigation@30",
+          "when": "resourceExtname =~ /\\.(ply|stl|obj|off|xyz|pcd|glb|gltf|step|stp|iges|igs|brep|brp)$/i"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "modeldock.reopenAsText",
+          "group": "navigation",
+          "when": "activeCustomEditorId == modeldock.preview"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "ModelDock",
+      "properties": {
+        "modeldock.maxFileSizeMB": {
+          "type": "integer",
+          "default": 8192,
+          "minimum": 1,
+          "maximum": 1048576,
+          "description": "Source file ceiling in MiB. Large binary PLY/STL use bounded sampled previews; other formats retain in-memory decode limits."
+        },
+        "modeldock.maxVertices": {
+          "type": "integer",
+          "default": 10000000,
+          "minimum": 1000,
+          "maximum": 50000000,
+          "description": "Maximum decoded vertices. Restart the preview after changing."
+        },
+        "modeldock.maxTriangles": {
+          "type": "integer",
+          "default": 10000000,
+          "minimum": 1000,
+          "maximum": 50000000,
+          "description": "Maximum decoded triangles."
+        },
+        "modeldock.cadQuality": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "default": "medium",
+          "description": "CAD tessellation quality. Higher quality requires more time and memory."
+        },
+        "modeldock.autoReload": {
+          "type": "boolean",
+          "default": true,
+          "description": "Refresh when AI or another process updates the model, preserving the camera."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "test:browser": "node scripts/browser-test.mjs",
+    "test:extension": "node scripts/extension-test.mjs",
+    "test:openai-stdio": "node tests/openai-stdio.mjs",
+    "package:vsix": "vsce package --no-dependencies --allow-missing-repository --no-rewrite-relative-links --out releases/",
+    "package:release": "node scripts/package-release.mjs",
+    "vscode:prepublish": "npm run build",
+    "start": "node dist/cli.cjs",
+    "test:openai-browser": "node tests/openai-browser.mjs",
+    "format": "prettier --write src tests scripts adapters/**/*.ts adapters/**/*.tsx",
+    "test:large": "node scripts/large-file-test.mjs",
+    "test:comparison": "node scripts/comparison-browser-test.mjs",
+    "test:openai-range": "node tests/openai-range-browser.mjs",
+    "fetch:cad-source": "node scripts/fetch-cad-source.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/ext-apps": "1.7.5",
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "@modelcontextprotocol/server": "2.4.0",
+    "@openai/mcp-extensions": "0.2.1",
+    "occt-import-js": "0.0.23",
+    "three": "0.186.1",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.51.1",
+    "@types/node": "22.20.5",
+    "@types/react": "19.3.0",
+    "@types/three": "0.186.0",
+    "@types/vscode": "1.90.0",
+    "@vscode/test-electron": "3.1.0",
+    "@vscode/vsce": "4.1.0",
+    "esbuild": "0.28.2",
+    "prettier": "3.6.2",
+    "react": "19.3.1",
+    "tsx": "4.23.15",
+    "typescript": "7.0.2",
+    "yazl": "3.3.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Afloat16/modeldock.git"
+  },
+  "homepage": "https://github.com/Afloat16/modeldock#readme",
+  "bugs": {
+    "url": "https://github.com/Afloat16/modeldock/issues"
+  }
+}
