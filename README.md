@@ -8,6 +8,18 @@ ModelDock is a local 3D preview toolkit for AI-assisted reconstruction and CAD w
 
 Generate a model, click the file, and inspect it. For reconstruction evaluation, use **Add models → choose reference / ground truth → align if needed → compare**. A reference can be a CAD-derived STL or another mesh/point cloud. Source coordinates stay intact; models are never aligned automatically.
 
+## Try v0.2 and share feedback
+
+**[Download the release](https://github.com/Afloat16/modeldock/releases/tag/v0.2.0)** · **[Testing invitation and feedback](https://github.com/Afloat16/modeldock/issues/1)**
+
+Bring a PLY/STL reconstruction or a reference mesh. Try direct preview, colored overlays, synchronized views, explicit alignment and a comparison report. Binary PLY/STL sources above **5 GiB** have bounded, sampled previews. Tell us what you tested and which step would make your workflow easier; English and Chinese feedback are welcome.
+
+![ModelDock shared viewer showing the included arch point cloud](docs/images/preview.jpg)
+
+![ModelDock shared viewer comparing the included arch point cloud and mesh](docs/images/comparison.jpg)
+
+These are real screenshots of the shared viewer running through the local CLI, using the repository's original demo fixtures. See [screenshot details](docs/images/README.md).
+
 ## What it does
 
 - Click a supported file in VS Code to open an interactive editor tab. The extension also works beside Codex in VS Code; compatible forks require their own installation check.

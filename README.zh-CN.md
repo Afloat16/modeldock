@@ -6,6 +6,18 @@
 
 典型使用方式：AI 输出模型 → 点击文件 → 检查 → 修改 → 同一视角查看更新。评估多个重建结果时，使用 **添加模型 → 选择基准 / 真值 → 按需配准 → 评估**。STL 曲面可作为基准；模型保留源坐标，默认不自动配准。
 
+## 欢迎测试 v0.2
+
+**[下载发布包](https://github.com/Afloat16/modeldock/releases/tag/v0.2.0)** · **[测试邀请与反馈入口](https://github.com/Afloat16/modeldock/issues/1)**
+
+欢迎带上自己的 PLY/STL 重建结果或参考模型，体验直接预览、彩色叠加、同步并排、显式配准和对比报告。二进制 PLY/STL 支持 **5 GiB 以上源文件的有界采样预览**。试用体验、功能建议和可复现的问题都欢迎反馈，中英文均可。
+
+![ModelDock 共用查看器展示仓库随附的拱形点云](docs/images/preview.jpg)
+
+![ModelDock 共用查看器对比拱形点云与网格](docs/images/comparison.jpg)
+
+以上为本地 CLI 入口运行共享查看器的真实截图，使用仓库中的原创示例模型。详见[截图说明](docs/images/README.md)。
+
 ## 快速开始
 
 ### VS Code / VS Code 中的 Codex
