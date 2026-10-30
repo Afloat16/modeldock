@@ -1,6 +1,6 @@
 # ModelDock — local 3D previews and reconstruction comparison with Three.js
 
-Prepared for the [three.js Showcase category](https://discourse.threejs.org/c/showcase/7). **Status: draft; not submitted.**
+Submitted to the [three.js Showcase category](https://discourse.threejs.org/c/showcase/7) on **2026-10-30**. **Status: awaiting moderator approval; no public post URL yet.** The forum confirmed “Post Needs Approval” and one pending post.
 
 ---
 
